@@ -44,27 +44,32 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Widget getButtons(List<dynamic> answers) {
+    double padding = 50.0;
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < answers.length; i++) {
+      padding = padding + 50.0;
       list.add(
         Center(
-          child: MaterialButton(
-            height: 40.0,
-            minWidth: 60.0,
-            color: Colors.teal,
-            textColor: Colors.white,
-            child: Text(answers[i].toString()),
-            onPressed: () {
-              _showAlert(context, "Mal!", "Respuesta icorrecta!", false);
-            },
-            splashColor: Colors.green,
+          child: Padding(
+            padding:  EdgeInsets.only(top: padding),
+            child: MaterialButton(
+              height: 40.0,
+              minWidth: 60.0,
+              color: Colors.teal,
+              textColor: Colors.white,
+              child: Text(answers[i].toString()),
+              onPressed: () {
+                _showAlert(context, "Mal!", "Respuesta incorrecta!", false);
+              },
+              splashColor: Colors.green,
+            ),
           ),
         ),
       );
     }
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
-      child: SingleChildScrollView(child: new Row(children: list)),
+      child: SingleChildScrollView(child: Center(child: new Stack(children: list))),
     );
   }
 
@@ -86,6 +91,12 @@ class _DetailPageState extends State<DetailPage> {
                   fontWeight: FontWeight.bold),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 100.0),
+            child: Center(
+              child:  getButtons(widget.category.incorrect_answers),
+            ),
+          ),
           Center(
             child: MaterialButton(
               height: 40.0,
@@ -98,12 +109,6 @@ class _DetailPageState extends State<DetailPage> {
                     context, "Enhorabuena!!", "Respuesta correcta!", true);
               },
               splashColor: Colors.green,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 150.0),
-            child: Center(
-              child:  getButtons(widget.category.incorrect_answers),
             ),
           ),
         ],
