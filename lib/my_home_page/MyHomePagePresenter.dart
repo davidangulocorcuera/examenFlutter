@@ -28,7 +28,7 @@ class MyHomePagePresenter{
     _view.hideLoading();
   }
 
-  elementClicked(int position) {
-    _view.openDetailScreen(position);
+  elementClicked(Category category) {
+    _view.openDetailScreen(category);
   }
 }

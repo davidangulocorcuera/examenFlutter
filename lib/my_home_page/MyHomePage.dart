@@ -42,9 +42,9 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
     });
   }
   @override
-  openDetailScreen(int position) {
+  openDetailScreen(Category category) {
     Navigator.push(context, MaterialPageRoute(builder: (c) {
-      return DetailPage(position);
+      return DetailPage(category);
     }));
   }
   @override
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
               title:
               Text(_categories[position].question),
               onTap: () {
-                _presenter.elementClicked(position);
+                _presenter.elementClicked(_categories[position]);
               },
             );
           },
@@ -96,9 +96,11 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home page"),
+        title: Text("Flutter App"),
       ),
       body: buildBody(),
+
+
     );
   }
 

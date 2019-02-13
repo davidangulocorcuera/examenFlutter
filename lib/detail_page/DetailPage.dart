@@ -1,9 +1,11 @@
+import 'package:examen_flutter/model/Category.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
-  final int position;
+  final Category category;
 
-  DetailPage(this.position);
+  DetailPage(this.category);
   @override
   _DetailPageState createState() => _DetailPageState();
 }
@@ -11,6 +13,13 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.category.question),
+      ),
+      body: Stack(
+
+      ),
+    );
   }
 }
