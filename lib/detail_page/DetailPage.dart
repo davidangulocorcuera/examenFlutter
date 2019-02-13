@@ -11,14 +11,65 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  void _showAlert(BuildContext context,String title ,String message) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(message),
+        )
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category.question),
+        title: Text("Question"),
       ),
       body: Stack(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Text(widget.category.question,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Center(
+            child: MaterialButton(
+              height: 40.0,
+              minWidth: 60.0,
+              color: Colors.teal,
+              textColor: Colors.white,
+              child: Text(widget.category.correct_answer),
+              onPressed: (){
+                _showAlert(context,"Enhorabuena!!","Respuesta correcta!");
+              },
+              splashColor: Colors.green,
+            ),
 
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top :150.0),
+            child: Center(
+              child: MaterialButton(
+                height: 40.0,
+                minWidth: 60.0,
+                color: Colors.teal,
+                textColor: Colors.white,
+                child: Text(widget.category.incorrect_answers[0].toString()),
+                onPressed: (){
+                  _showAlert(context,"Mal!","Respuesta icorrecta!");
+
+                },
+                splashColor: Colors.green,
+              ),
+
+            ),
+          ),
+        ],
       ),
     );
   }
