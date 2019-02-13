@@ -7,43 +7,67 @@ class DetailPage extends StatefulWidget {
   final Category category;
 
   DetailPage(this.category);
+
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  void _showAlert(BuildContext context,String title ,String message,bool isTrue) {
+  void _showAlert(
+      BuildContext context, String title, String message, bool isTrue) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: <Widget>[
-         MaterialButton(
-        height: 40.0,
-          minWidth: 60.0,
-          color: Colors.redAccent,
-          textColor: Colors.white,
-          child: Text("X"),
-          onPressed: (){
-              if(!isTrue){
-                Navigator.pop(context);
-              }
-              else{
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyHomePage()),
-                );
-              }
+              title: Text(title),
+              content: Text(message),
+              actions: <Widget>[
+                MaterialButton(
+                  height: 40.0,
+                  minWidth: 60.0,
+                  color: Colors.redAccent,
+                  textColor: Colors.white,
+                  child: Text("X"),
+                  onPressed: () {
+                    if (!isTrue) {
+                      Navigator.pop(context);
+                    } else {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                      );
+                    }
+                  },
+                  splashColor: Colors.green,
+                ),
+              ],
+            ));
+  }
 
-          },
-          splashColor: Colors.green,
+  Widget getButtons(List<dynamic> answers) {
+    List<Widget> list = new List<Widget>();
+    for (var i = 0; i < answers.length; i++) {
+      list.add(
+        Center(
+          child: MaterialButton(
+            height: 40.0,
+            minWidth: 60.0,
+            color: Colors.teal,
+            textColor: Colors.white,
+            child: Text(answers[i].toString()),
+            onPressed: () {
+              _showAlert(context, "Mal!", "Respuesta icorrecta!", false);
+            },
+            splashColor: Colors.green,
+          ),
         ),
-          ],
-
-        )
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: SingleChildScrollView(child: new Row(children: list)),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +78,8 @@ class _DetailPageState extends State<DetailPage> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(30.0),
-            child: Text(widget.category.question,
+            child: Text(
+              widget.category.question,
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -68,29 +93,17 @@ class _DetailPageState extends State<DetailPage> {
               color: Colors.teal,
               textColor: Colors.white,
               child: Text(widget.category.correct_answer),
-              onPressed: (){
-                _showAlert(context,"Enhorabuena!!","Respuesta correcta!",true);
+              onPressed: () {
+                _showAlert(
+                    context, "Enhorabuena!!", "Respuesta correcta!", true);
               },
               splashColor: Colors.green,
             ),
-
           ),
           Padding(
-            padding: const EdgeInsets.only(top :150.0),
+            padding: const EdgeInsets.only(top: 150.0),
             child: Center(
-              child: MaterialButton(
-                height: 40.0,
-                minWidth: 60.0,
-                color: Colors.teal,
-                textColor: Colors.white,
-                child: Text(widget.category.incorrect_answers[0].toString()),
-                onPressed: (){
-                  _showAlert(context,"Mal!","Respuesta icorrecta!",false);
-
-                },
-                splashColor: Colors.green,
-              ),
-
+              child:  getButtons(widget.category.incorrect_answers),
             ),
           ),
         ],

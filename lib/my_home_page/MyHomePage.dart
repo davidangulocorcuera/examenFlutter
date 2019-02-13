@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
+class _MyHomePageState extends State<MyHomePage> implements MyHomePageView {
   List<Category> _categories = [];
   bool _isLoading = true;
   bool _isError = false;
@@ -28,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
     super.initState();
     _presenter.fetchData();
   }
+
   @override
   showError() {
     setState(() {
@@ -41,12 +42,14 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
       this._categories = categories;
     });
   }
+
   @override
   openDetailScreen(Category category) {
     Navigator.push(context, MaterialPageRoute(builder: (c) {
       return DetailPage(category);
     }));
   }
+
   @override
   showLoading() {
     setState(() {
@@ -60,15 +63,15 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
       _isLoading = false;
     });
   }
+
   buildBody() {
     if (_isLoading) {
       return Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 90.0),
-            child: CircularProgressIndicator(),
-          ));
-    }
-    else if (_isError) {
+        padding: const EdgeInsets.symmetric(horizontal: 90.0),
+        child: CircularProgressIndicator(),
+      ));
+    } else if (_isError) {
       return Center(child: Text("Ha habido un error"));
     } else {
       return RefreshIndicator(
@@ -79,8 +82,7 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
           itemBuilder: (context, position) {
             return ListTile(
               leading: Icon(Icons.account_circle),
-              title:
-              Text(_categories[position].question),
+              title: Text(_categories[position].question),
               onTap: () {
                 _presenter.elementClicked(_categories[position]);
               },
@@ -92,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,10 +102,6 @@ class _MyHomePageState extends State<MyHomePage> implements MyHomePageView{
         title: Text("Flutter App"),
       ),
       body: buildBody(),
-
-
     );
   }
-
-
 }
